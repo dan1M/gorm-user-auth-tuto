@@ -45,10 +45,10 @@ func (s *UserService) DeleteUser(id int) (*model.User, error) {
 	return &user, nil
 }
 
-func (s *UserService) GetByEmail(email string) ([]*model.User, error) {
-	var users []*model.User
+func (s *UserService) GetByEmail(email string) (*model.User, error) {
+	var users *model.User
 
-	err := s.db.Find(&users, email).Error
+	err := s.db.Where("email = ?", email).First(&users).Error
 	if err != nil {
 		return nil, err
 	}
