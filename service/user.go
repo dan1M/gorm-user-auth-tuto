@@ -55,3 +55,28 @@ func (s *UserService) GetByEmail(email string) ([]*model.User, error) {
 
 	return users, nil
 }
+
+func (s *UserService) CreateUser(data *model.UserCreateDTO) (*model.User, error) {
+	user := &model.User{
+		Email:    data.Email,
+		Password: data.Password,
+	}
+	err := s.db.Save(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (s *UserService) UpdateUser(data *model.UserUpdateDTO) (*model.User, error) {
+	user := &model.User{
+		Email: data.Email,
+	}
+	err := s.db.Save(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
